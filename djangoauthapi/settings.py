@@ -27,7 +27,7 @@ INSTALLED_APPS = [
 'django.contrib.messages',
 'django.contrib.staticfiles',
 'account',
-'rest_framework'
+'rest_framework',
 'corsheaders'
 ]
 
@@ -138,4 +138,11 @@ SIMPLE_JWT = {
 "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
 
 "JTI_CLAIM": "jti",
+}
+
+CORS_ALLOWED_ORIGIN = {
+
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+
 }
