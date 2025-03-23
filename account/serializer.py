@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
         extra_kwargs = {
             'password': {'write_only':True}
-        }
+         }
 
     def validate(self, data):
         password = data.get('password')
