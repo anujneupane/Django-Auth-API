@@ -26,4 +26,7 @@ class UserloginSerial(serializers.ModelSerializer):
         model = User
         fields = ['email','password']
 
-   
+class UserProfileSerial(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','email','name']

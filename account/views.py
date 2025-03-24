@@ -1,10 +1,11 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from account.serializer import UserSerializer,UserloginSerial
+from account.serializer import UserSerializer,UserloginSerial,UserProfileSerial
 from rest_framework.authentication import authenticate
 from account.renderer import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated 
 
 # generate token manually
 def get_tokens_for_user(user):
@@ -26,10 +27,9 @@ class UserRegistration(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
             
 
-
-class Userlogin(APIView):
+class Userlogin(APIView):  
     renderer_classes = [UserRenderer]
-    def post(self,request,formate = None):
+    def post(self,request, format = None):
          serializer = UserloginSerial(data = request.data)
          if serializer.is_valid(raise_exception=True):
              email = serializer.data.get('email')
@@ -41,3 +41,11 @@ class Userlogin(APIView):
              else:
               return Response({'msg':'Email or Password Not Valid '},status=status.HTTP_404_NOT_FOUND)
          return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserProfile(APIView):
+    renderer_classes = [UserRenderer]
+    permission_classes = IsAuthenticated
+    def get(self,request, format = None):
+        serializer = UserProfileSerial(request.user)
+        return Response(serializer.data, status = status.HTTP_200_OK)
