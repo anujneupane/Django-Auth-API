@@ -52,9 +52,10 @@ class UserChangePasswordSerial(serializers.ModelSerializer):
         user.save()
         return data       
 
-class EmailPasswordResetserial(serializers.ModelField):
+class EmailPasswordResetserial(serializers.ModelSerializer):
     email = serializers.EmailField(max_length = 255,style={'input_type':'password'},write_only=True)
     class Meta:
+        model = User
         fields = ['email']
 
     def validate(self,attrs):
