@@ -48,3 +48,7 @@ class UserChangePasswordSerial(serializers.ModelSerializer):
         user.save()
         return data       
 
+class EmailPasswordResetserial(serializers.ModelField):
+    email = serializers.EmailField(max_length = 255,style={'input_type':'password'},write_only=True)
+    class Meta:
+        fields = ['email']
