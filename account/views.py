@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from account.serializer import UserSerializer,UserloginSerial,UserProfileSerial
+from account.serializer import UserSerializer,UserloginSerial,UserProfileSerial,UserChangePasswordSerial
 from rest_framework.authentication import authenticate
 from account.renderer import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -49,3 +49,12 @@ class UserProfile(APIView):
     def get(self,request, format = None):
         serializer = UserProfileSerial(request.user)
         return Response(serializer.data, status = status.HTTP_200_OK)
+    
+class UserPasswordChange(APIView):
+    renderer_classes = [UserRenderer]
+    permission_classes = [IsAuthenticated]
+    def post(self,request, format = None):
+        serializer = UserChangePasswordSerial(data = request.data,context ={'user':request.user})
+        if serializer.is_valid(raise_exception=True):
+          return Response({'msg':'Password Change Success'},status=status.HTTP_200_OK)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
