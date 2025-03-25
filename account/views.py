@@ -67,3 +67,8 @@ class PasswordResetEmail(APIView):
             return Response({'msg':'Password Reset link Sent. Please Check your Email '},status=status.HTTP_200_OK)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+class FinalPassReset(APIView):
+    renderer_classes = [UserRenderer]
+    pass
+    def post(self,request,format=None, uid, token):
+        pass

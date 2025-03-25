@@ -72,5 +72,4 @@ class EmailPasswordResetserial(serializers.ModelSerializer):
         else:
             raise ValidationErr('You are not Registered User')
         
-            
-
+class FinalPasswordResetserial(serializers.Serializer):
