@@ -45,7 +45,7 @@ class Userlogin(APIView):
 
 class UserProfile(APIView):
     renderer_classes = [UserRenderer]
-    permission_classes = IsAuthenticated
+    permission_classes = [IsAuthenticated]
     def get(self,request, format = None):
         serializer = UserProfileSerial(request.user)
         return Response(serializer.data, status = status.HTTP_200_OK)
