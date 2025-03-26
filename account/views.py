@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from account.serializer import UserSerializer,UserloginSerial,UserProfileSerial,UserChangePasswordSerial,EmailPasswordResetserial
+from account.serializer import UserSerializer,UserloginSerial,UserProfileSerial,UserChangePasswordSerial,EmailPasswordResetserial,FinalPasswordResetserial
 from rest_framework.authentication import authenticate
 from account.renderer import UserRenderer
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -69,6 +69,8 @@ class PasswordResetEmail(APIView):
 
 class FinalPassReset(APIView):
     renderer_classes = [UserRenderer]
-    pass
-    def post(self,request,format=None, uid, token):
-        pass
+    def post(self,request,uid, token,format=None, ):
+        serializer = FinalPasswordResetserial(data = request.data,context={'uid':uid,'token':token})
+        if serializer.is_valid(raise_exception=True):
+            return Response({'msg':'Password Reset Successfully'})
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
