@@ -86,9 +86,6 @@ class EmailPasswordResetserial(serializers.ModelSerializer):
 class FinalPasswordResetserial(serializers.Serializer):
     password = serializers.CharField(max_length = 255,style={'input_type':'password'},write_only=True)
     password2 = serializers.CharField(max_length = 255,style={'input_type':'password'},write_only=True)
-    class Meta:
-        fields = ['password','password2']
-
     def validate(self, data):
         try:  
             password = data.get('password')
